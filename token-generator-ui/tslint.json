@@ -1,0 +1,22 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-config-prettier"],
+  "rules": {
+    "curly": [true, "ignore-same-line"],
+    "member-access": [true, "no-public"],
+    "quotemark": [true, "single", "jsx-double"],
+    "arrow-return-shorthand": [true, "multiline"],
+    "only-arrow-functions": [true],
+    "object-literal-sort-keys": false,
+    "no-console": false,
+    "interface-name": false,
+    "import-name": false,
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore",
+        "allow-pascal-case"
+      ]
+    }
+  }
+}

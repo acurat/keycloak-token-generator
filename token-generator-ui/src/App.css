@@ -1,0 +1,26 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  padding: 20px;
+  flex: 1;
+}
+
+.App .Footer {
+  flex: 1;
+}
+
+.Site-content {
+  flex: 1;
+}
+
+.Segment {
+  max-width: 50%;
+  word-break: break-all;
+  overflow: auto;
+  max-height: 700px;
+  padding-top: 20px;
+  color: #9f3a38;
+}

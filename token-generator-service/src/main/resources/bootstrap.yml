@@ -1,0 +1,16 @@
+spring:
+  application.name: token-generator
+
+---
+spring:
+  profiles: local,test
+  cloud.kubernetes.config.enabled: false
+
+---
+spring:
+  profiles: cloud
+  cloud:
+    kubernetes:
+      config:
+        sources:
+          - name: ${spring.application.name}

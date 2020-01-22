@@ -1,0 +1,17 @@
+logging:
+  level:
+    org.acurat.tokens: debug
+
+keycloak:
+  clients:
+    exclude:
+      - admin-cli
+      - security-admin-console
+  environments:
+    local:
+      serverUrl: http://localhost:9999/auth
+      realm: testrealm
+      clientId: token-generator
+      clientSecret: b8b25425-159d-41ed-a428-473ce6083b00
+      active: true
+      tokenExchangeEnabled: false

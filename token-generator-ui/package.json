@@ -1,0 +1,53 @@
+{
+  "name": "token-generator-ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "24.0.16",
+    "@types/jwt-decode": "^2.2.1",
+    "@types/node": "12.6.9",
+    "@types/react": "16.8.24",
+    "@types/react-dom": "16.8.5",
+    "@types/react-json-pretty": "^1.3.4",
+    "jwt-decode": "^2.2.0",
+    "react": "^16.8.6",
+    "react-countdown-now": "^2.1.1",
+    "react-dom": "^16.8.6",
+    "react-json-pretty": "^2.1.0",
+    "react-scripts": "3.0.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.87.3",
+    "typescript": "3.5.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint:prettier": "yarn prettier --config .prettierrc.json --loglevel error --write \"src/**/*.{ts,tsx,css}\"",
+    "lint:tslint": "tslint --project tsconfig.json --fix",
+    "lint": "yarn lint:prettier && yarn lint:tslint && echo 'Linting Completed'"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "prettier": "^1.18.2",
+    "tslint": "^5.18.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0"
+  }
+}
