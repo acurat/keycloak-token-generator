@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.acurat.tokens.keycloak.model.KeycloakProperties;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,12 +17,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.boot.Banner.Mode.OFF;
+
 @Slf4j
 @SpringBootApplication
 public class TokenGeneratorServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TokenGeneratorServiceApplication.class, args);
+        SpringApplication application = new SpringApplication(TokenGeneratorServiceApplication.class);
+        application.setBannerMode(OFF);
+        application.run(args);
     }
 
     @Bean
