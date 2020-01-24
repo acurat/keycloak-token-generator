@@ -107,12 +107,14 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                             return (<Form.Group inline key={key}>
                                 <label key={`label-${key}`}>{key}</label>
                                 <Form.Input
+                                    style={{ paddingLeft: '35px'}}
                                     key={`input-${key}`}
                                     placeholder=""
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values[key]}
                                     name={key}
+                                    width={16}
                                     error={
                                         errors[key] && touched[key] && {
                                             content: errors[key],

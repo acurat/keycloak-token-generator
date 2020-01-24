@@ -52,7 +52,7 @@ const Custom: React.FC<Props> = () => {
                                   fullScreen={true}/>
                 </ModalComponent>
                 <Label as='a' ribbon>
-                    Public Key
+                    RSA256 Public Key
                 </Label>
                 <Button onClick={show('jwk')}>
                     <Button.Content>JWK format</Button.Content>

@@ -1,4 +1,4 @@
-import React, {CSSProperties, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Icon, Label, Segment } from 'semantic-ui-react';
 import JSONPretty from 'react-json-pretty';
 import { copyToClipboard } from '../utils/globals';
