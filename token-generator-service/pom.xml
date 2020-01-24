@@ -13,10 +13,6 @@
     <name>token-generator-service</name>
     <description>Service for token generation</description>
 
-    <properties>
-        <kotlin.version>1.3.61</kotlin.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,7 +36,7 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-core</artifactId>
-            <version>6.0.1</version>
+            <version>${keycloak.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
