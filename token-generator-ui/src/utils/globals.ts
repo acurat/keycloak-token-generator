@@ -19,4 +19,8 @@ const copyToClipboard = (text: string) => {
   }
 };
 
-export { copyToClipboard };
+const isString = (value: any) => typeof value === 'string' || value instanceof String;
+const isNumber = (value: any) => typeof value === 'number' || value instanceof Number;
+const isDate = (value: any) => typeof value === 'object' || value instanceof Date;
+
+export { copyToClipboard, isNumber, isString, isDate };

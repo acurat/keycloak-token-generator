@@ -18,7 +18,7 @@ interface State {
   scopes: string[];
 }
 
-class GenerateTokens extends React.Component<Props, State> {
+class GenerateKeycloakTokens extends React.Component<Props, State> {
   state = {
     environment: undefined,
     client: undefined,
@@ -127,4 +127,4 @@ class GenerateTokens extends React.Component<Props, State> {
   }
 }
 
-export default GenerateTokens;
+export default GenerateKeycloakTokens;

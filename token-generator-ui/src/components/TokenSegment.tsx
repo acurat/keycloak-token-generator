@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {CSSProperties, useEffect, useState} from 'react';
 import { Icon, Label, Segment } from 'semantic-ui-react';
 import JSONPretty from 'react-json-pretty';
 import { copyToClipboard } from '../utils/globals';
@@ -6,9 +6,11 @@ import { copyToClipboard } from '../utils/globals';
 interface Props {
   content: any;
   isJSON: boolean;
+  fullScreen?: boolean;
+
 }
 
-const TokenSegment: React.FC<Props> = ({ content, isJSON }: Props) => {
+const TokenSegment: React.FC<Props> = ({ content, isJSON, fullScreen }: Props) => {
   // use State for copy text
   const [copyText, setCopyText] = useState('Copy');
 
@@ -30,7 +32,7 @@ const TokenSegment: React.FC<Props> = ({ content, isJSON }: Props) => {
   };
 
   return (
-    <Segment className="Segment">
+    <Segment className={`Segment ${fullScreen ? 'Segment-full' : ''}`}>
       <Label as="a" attached={'top right'} onClick={onClickCallback}>
         {copyText}&nbsp; <Icon name="copy" />
       </Label>

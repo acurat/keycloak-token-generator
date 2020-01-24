@@ -24,3 +24,7 @@
   padding-top: 20px;
   color: #9f3a38;
 }
+
+.Segment-full {
+  max-width: 100% !important;
+}
