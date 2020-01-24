@@ -14,7 +14,7 @@ class JwtController(private val jwtService: JwtService) {
     fun getKeys() = jwtService.getKeys()
     
     @PostMapping
-    fun createJWT(@RequestBody jwtClaims: JwtClaims) =
+    fun createJWT(@RequestBody jwtClaims: Map<String, Any>) =
             jwtService.mintJwt(jwtClaims)
 
 }

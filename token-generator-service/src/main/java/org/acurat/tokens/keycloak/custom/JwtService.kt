@@ -19,6 +19,8 @@ import java.util.Date
 import java.util.UUID
 import java.util.stream.Collectors
 
+val claimList = listOf("aud", "exp", "nbf", "iss", "sub", "azp", "iat", "jti")
+
 @Service
 class JwtService {
     private var rsaKey: RSAKey
@@ -57,19 +59,30 @@ class JwtService {
             "pem" to publicKeyPem
     )
     
-    fun mintJwt(jwtClaims: JwtClaims): String {
-    
+    fun mintJwt(jwtClaims: Map<String, Any>): String {
+        
         val jwtClaimsSet = JWTClaimsSet.Builder()
                 .jwtID(UUID.randomUUID().toString())
-                .audience(jwtClaims.audience)
-                .issueTime(Date())
-                .notBeforeTime(Date())
-                .expirationTime(Date.from(jwtClaims.expirationTime))
-                .issuer(jwtClaims.issuer)
-                .subject(jwtClaims.subject)
-                .claim("azp", jwtClaims.azp)
-    
-        jwtClaims.additional.forEach{ entry ->
+        jwtClaimsSet.issueTime(Date())
+        jwtClaimsSet.notBeforeTime(Date())
+        
+        if (jwtClaims.containsKey("aud") && jwtClaims["aud"] is String)
+            jwtClaimsSet.audience(jwtClaims["aud"].toString())
+        
+        if (jwtClaims.containsKey("exp") && jwtClaims["exp"] is Long)
+            jwtClaimsSet.expirationTime(Date.from(Instant.
+                    ofEpochMilli(jwtClaims["exp"].toString().toLong())))
+        
+        if (jwtClaims.containsKey("iss") && jwtClaims["iss"] is String)
+            jwtClaimsSet.issuer(jwtClaims["iss"].toString())
+        
+        if (jwtClaims.containsKey("sub") && jwtClaims["sub"] is String)
+            jwtClaimsSet.subject(jwtClaims["sub"].toString())
+        
+        if (jwtClaims.containsKey("azp") && jwtClaims["azp"] is String)
+            jwtClaimsSet.claim("azp", jwtClaims["azp"])
+        
+        jwtClaims.filterKeys { key -> !claimList.contains(key) }.forEach { entry ->
             jwtClaimsSet.claim(entry.key, entry.value)
         }
         
@@ -77,7 +90,7 @@ class JwtService {
                 JWSHeader.Builder(JWSAlgorithm.RS256)
                         .keyID(rsaKey.keyID).build(),
                 jwtClaimsSet.build())
-    
+        
         signedJWT.sign(signer)
         
         return signedJWT.serialize()
