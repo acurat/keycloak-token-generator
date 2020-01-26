@@ -1,3 +1,5 @@
+import {SupportedTypes} from "./types";
+
 const copyToClipboard = (text: string) => {
   if (
     document.queryCommandSupported &&
@@ -19,8 +21,27 @@ const copyToClipboard = (text: string) => {
   }
 };
 
+
+const getDefaultValue = (type: string) => {
+  let defaultValue;
+  switch (type) {
+    case SupportedTypes.Number:
+      defaultValue = 0;
+      break;
+    case SupportedTypes.Date:
+      defaultValue = Date.now();
+      break;
+    case SupportedTypes.Object:
+      defaultValue = JSON.stringify({});
+      break;
+    default:
+      defaultValue = '';
+  }
+  return defaultValue;
+};
+
 const isString = (value: any) => typeof value === 'string' || value instanceof String;
 const isNumber = (value: any) => typeof value === 'number' || value instanceof Number;
 const isDate = (value: any) => typeof value === 'object' || value instanceof Date;
 
-export { copyToClipboard, isNumber, isString, isDate };
+export { copyToClipboard, getDefaultValue, isNumber, isString, isDate };

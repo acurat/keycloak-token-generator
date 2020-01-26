@@ -22,7 +22,7 @@ const panes = [
 const App: React.FC = () => {
     return (
         <Container fluid className="App">
-            <Header as='h1' textAlign={"center"}>Department of Tokens <FontAwesomeIcon icon={faCoins}/> </Header>
+            <Header as='h1' textAlign={"center"}>Ministry of Tokens <FontAwesomeIcon icon={faCoins}/> </Header>
             <Tab panes={panes}/>
         </Container>
     );

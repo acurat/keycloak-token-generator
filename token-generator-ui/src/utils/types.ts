@@ -7,3 +7,10 @@ export interface Tokens {
 export interface Keys {
   [key: string]: string | JSON;
 }
+
+export enum SupportedTypes {
+    String = 'string',
+    Number = 'number',
+    Date = 'date',
+    Object = 'object',
+}
