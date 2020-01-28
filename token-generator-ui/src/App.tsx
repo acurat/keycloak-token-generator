@@ -21,8 +21,10 @@ const panes = [
 const App: React.FC = () => {
     return (
         <Container fluid className="App">
-            <Header as='h1' textAlign={"center"}>Ministry of Tokens <FontAwesomeIcon icon={faCoins}/> </Header>
-            <Tab panes={panes}/>
+            {/*<Header as='h1' textAlign={"center"}>Ministry of Tokens <FontAwesomeIcon icon={faCoins}/> </Header>*/}
+            {/*<Tab panes={panes}/>*/}
+            <Header as='h1' textAlign={"center"}>Keycloak Token Generator</Header>
+            <Keycloak/>
         </Container>
     );
 };
