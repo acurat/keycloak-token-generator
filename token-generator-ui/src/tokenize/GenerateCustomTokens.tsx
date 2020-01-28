@@ -167,6 +167,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                                 }
                                             }
                                         />}
+                                        {(type === SupportedTypes.Date) && null}
 
                                     </Form.Group>)
                                 })}
