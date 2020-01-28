@@ -8,14 +8,13 @@ import {faCoins} from '@fortawesome/free-solid-svg-icons';
 
 const panes = [
     {
-        menuItem: 'Custom Tokens',
-        render: () => <Tab.Pane active><Custom/></Tab.Pane>,
-    },
-    {
         menuItem: 'Keycloak Tokens',
         render: () => <Tab.Pane><Keycloak/></Tab.Pane>,
     },
-
+    {
+        menuItem: 'Custom Tokens',
+        render: () => <Tab.Pane><Custom/></Tab.Pane>,
+    },
 ];
 
 

@@ -1,5 +1,7 @@
 package org.acurat.tokens.keycloak.custom
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader
 import com.nimbusds.jose.crypto.RSASSASigner
@@ -22,7 +24,7 @@ import java.util.stream.Collectors
 val claimList = listOf("aud", "exp", "nbf", "iss", "sub", "azp", "iat", "jti")
 
 @Service
-class JwtService {
+class JwtService(private val objectMapper: ObjectMapper) {
     private var rsaKey: RSAKey
     private val signer: RSASSASigner
     private val publicJwkSet: JWKSet
@@ -70,8 +72,7 @@ class JwtService {
             jwtClaimsSet.audience(jwtClaims["aud"].toString())
         
         if (jwtClaims.containsKey("exp") && jwtClaims["exp"] is Long)
-            jwtClaimsSet.expirationTime(Date.from(Instant.
-                    ofEpochMilli(jwtClaims["exp"].toString().toLong())))
+            jwtClaimsSet.expirationTime(Date.from(Instant.ofEpochMilli(jwtClaims["exp"].toString().toLong())))
         
         if (jwtClaims.containsKey("iss") && jwtClaims["iss"] is String)
             jwtClaimsSet.issuer(jwtClaims["iss"].toString())
@@ -83,7 +84,14 @@ class JwtService {
             jwtClaimsSet.claim("azp", jwtClaims["azp"])
         
         jwtClaims.filterKeys { key -> !claimList.contains(key) }.forEach { entry ->
-            jwtClaimsSet.claim(entry.key, entry.value)
+            if (entry.value is String) {
+                try {
+                    val value = jacksonObjectMapper().readValue(entry.value.toString(), Any::class.java)
+                    jwtClaimsSet.claim(entry.key, value)
+                } catch (e: Exception) {
+                    jwtClaimsSet.claim(entry.key, entry.value)
+                }
+            } else jwtClaimsSet.claim(entry.key, entry.value)
         }
         
         val signedJWT = SignedJWT(

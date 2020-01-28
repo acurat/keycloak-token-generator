@@ -130,10 +130,13 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                             </ModalComponent>
                             <Form onSubmit={handleSubmit}>
                                 {Object.keys(values).map((key: string) => {
+                                    // @ts-ignore
+                                    const type = this.state.claimTypes[key];
                                     return (<Form.Group inline key={key}>
                                         <label key={`label-${key}`} style={{width: '125px'}}>{key}</label>
+                                        {(type === SupportedTypes.String || type === SupportedTypes.Number) &&
                                         <Form.Input
-                                            style={{ float: 'right'}}
+                                            style={{float: 'right'}}
                                             key={`input-${key}`}
                                             placeholder=""
                                             onChange={handleChange}
@@ -147,10 +150,27 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                                     pointing: 'above'
                                                 }
                                             }
-                                        />
+                                        />}
+                                        {(type === SupportedTypes.Object) && <Form.TextArea
+                                            style={{float: 'right'}}
+                                            key={`input-${key}`}
+                                            placeholder=""
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values[key]}
+                                            name={key}
+                                            width={13}
+                                            error={
+                                                errors[key] && touched[key] && {
+                                                    content: errors[key],
+                                                    pointing: 'above'
+                                                }
+                                            }
+                                        />}
+
                                     </Form.Group>)
                                 })}
-                                <div style={{ marginTop: '30px'}}>
+                                <div style={{marginTop: '30px'}}>
                                     <Button type="button" onClick={this.open}>Add More Claims</Button>
                                     <Button type="button" onClick={handleReset}>Reset Claims</Button>
                                     <Button type="submit" disabled={isSubmitting} floated={"right"}>

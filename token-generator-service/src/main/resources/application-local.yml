@@ -13,5 +13,5 @@ keycloak:
       realm: testrealm
       clientId: token-generator
       clientSecret: b8b25425-159d-41ed-a428-473ce6083b00
-      active: false
+      active: true
       tokenExchangeEnabled: false
