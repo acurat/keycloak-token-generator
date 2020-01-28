@@ -1,6 +1,5 @@
 package org.acurat.tokens.keycloak.custom
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader
@@ -23,8 +22,8 @@ import java.util.stream.Collectors
 
 val claimList = listOf("aud", "exp", "nbf", "iss", "sub", "azp", "iat", "jti")
 
-@Service
-class JwtService(private val objectMapper: ObjectMapper) {
+//@Service
+class JwtService {
     private var rsaKey: RSAKey
     private val signer: RSASSASigner
     private val publicJwkSet: JWKSet
