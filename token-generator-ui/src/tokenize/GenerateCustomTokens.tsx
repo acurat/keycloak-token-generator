@@ -5,6 +5,8 @@ import {SupportedTypes, Tokens} from "../utils/types";
 import ModalComponent from "../components/ModalComponent";
 import AddClaim, {NewClaim} from "./AddClaim";
 import {getDefaultValue} from "../utils/globals";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
     setTokens: Dispatch<Tokens | undefined>;
@@ -32,7 +34,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
             aud: SupportedTypes.String,
             azp: SupportedTypes.String,
             sub: SupportedTypes.String,
-            exp: SupportedTypes.Number,
+            exp: SupportedTypes.Date,
         }
     }
     ;
@@ -42,7 +44,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
         azp: 'your-app',
         aud: 'your-app-tests',
         sub: 'test-id',
-        exp: Date.now()
+        exp: new Date()
     };
 
     validate = (values: FormValues) => {
@@ -122,7 +124,8 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                           handleSubmit,
                           isSubmitting,
                           handleReset,
-                          setValues
+                          setValues,
+                          setFieldValue
                       }) => (
                         <>
                             <ModalComponent open={this.state.open} onClose={this.close}>
@@ -167,7 +170,16 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                                 }
                                             }
                                         />}
-                                        {(type === SupportedTypes.Date) && null}
+                                        {(type === SupportedTypes.Date) &&
+                                        <Form.Field style={{float: 'right'}} width={13}>
+                                            <DatePicker
+                                                showTimeSelect
+                                                timeFormat="HH:mm"
+                                                dateFormat="MMM d, yyyy h:mm aa"
+                                                selected={values[key]}
+                                                onChange={newDate => setFieldValue(key, newDate)}
+                                            />
+                                        </Form.Field>}
 
                                     </Form.Group>)
                                 })}

@@ -10,6 +10,8 @@ import com.nimbusds.jwt.JWTClaimsSet
 import com.nimbusds.jwt.SignedJWT
 import org.bouncycastle.util.io.pem.PemObject
 import org.bouncycastle.util.io.pem.PemWriter
+import org.springframework.core.io.ClassPathResource
+import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
 import java.io.StringWriter
 import java.nio.file.Files
@@ -22,21 +24,18 @@ import java.util.stream.Collectors
 
 val claimList = listOf("aud", "exp", "nbf", "iss", "sub", "azp", "iat", "jti")
 
-//@Service
-class JwtService {
+val utcRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z\$".toRegex()
+
+@Service
+class JwtService(resourceLoader: ResourceLoader) {
     private var rsaKey: RSAKey
     private val signer: RSASSASigner
     private val publicJwkSet: JWKSet
     private val publicKeyPem: String
     
     init {
-        
-        val path: Path = Paths.get(ClassLoader
-                .getSystemResource("jwkset.json").toURI())
-        
-        val lines = Files.lines(path)
-        val data = lines.collect(Collectors.joining("\n"))
-        lines.close()
+    
+        val data = resourceLoader.getResource("classpath:jwkset.json").file.readText()
         
         rsaKey = RSAKey.parse(data)
         
@@ -70,8 +69,9 @@ class JwtService {
         if (jwtClaims.containsKey("aud") && jwtClaims["aud"] is String)
             jwtClaimsSet.audience(jwtClaims["aud"].toString())
         
-        if (jwtClaims.containsKey("exp") && jwtClaims["exp"] is Long)
-            jwtClaimsSet.expirationTime(Date.from(Instant.ofEpochMilli(jwtClaims["exp"].toString().toLong())))
+        if (jwtClaims.containsKey("exp") && jwtClaims["exp"] is String) {
+            jwtClaimsSet.expirationTime(Date.from(Instant.parse(jwtClaims["exp"].toString())))
+        }
         
         if (jwtClaims.containsKey("iss") && jwtClaims["iss"] is String)
             jwtClaimsSet.issuer(jwtClaims["iss"].toString())
@@ -85,7 +85,11 @@ class JwtService {
         jwtClaims.filterKeys { key -> !claimList.contains(key) }.forEach { entry ->
             if (entry.value is String) {
                 try {
-                    val value = jacksonObjectMapper().readValue(entry.value.toString(), Any::class.java)
+                    val value = if (utcRegex.matches(entry.value.toString())) {
+                        Date.from(Instant.parse(entry.value.toString()))
+                    } else {
+                        jacksonObjectMapper().readValue(entry.value.toString(), Any::class.java)
+                    }
                     jwtClaimsSet.claim(entry.key, value)
                 } catch (e: Exception) {
                     jwtClaimsSet.claim(entry.key, entry.value)

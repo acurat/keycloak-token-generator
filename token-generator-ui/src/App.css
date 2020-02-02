@@ -28,3 +28,7 @@
 .Segment-full {
   max-width: 100% !important;
 }
+
+.Date-Picker {
+  min-width: 100% !important;
+}
