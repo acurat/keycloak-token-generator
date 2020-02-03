@@ -7,9 +7,10 @@ interface Props {
     onChange: (field: string, value: any, shouldValidate?: boolean | undefined) => any;
 }
 
-const FormDatePicker = ({ value, claimName, onChange }: Props) => {
+const FormDatePicker = ({value, claimName, onChange}: Props) => {
     useEffect(() => {
         claimName && onChange(claimName, new Date(value), true)
+        // eslint-disable-next-line
     }, []);
 
     return (
