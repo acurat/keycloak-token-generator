@@ -25,7 +25,7 @@ const TokenSegment: React.FC<Props> = ({ content, isJSON, fullScreen }: Props) =
   }, [copyText]);
 
   const onClickCallback = () => {
-    const success = copyToClipboard(JSON.stringify(content));
+    const success = copyToClipboard(isJSON ? JSON.stringify(content) : content);
     if (success) {
       setCopyText('Copied');
     }
