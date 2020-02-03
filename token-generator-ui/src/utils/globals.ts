@@ -40,8 +40,21 @@ const getDefaultValue = (type: string) => {
   return defaultValue;
 };
 
-const isString = (value: any) => typeof value === 'string' || value instanceof String;
-const isNumber = (value: any) => typeof value === 'number' || value instanceof Number;
-const isDate = (value: any) => typeof value === 'object' || value instanceof Date;
+const getTommorrowsDate = () => {
+  const date = new Date();
+  return date.setDate(date.getDate() + 1);
+};
 
-export { copyToClipboard, getDefaultValue, isNumber, isString, isDate };
+const isString = (value: any) => value && typeof value === 'string' || value instanceof String;
+const isNumber = (value: any) => !isNaN(value);
+const isDate = (value: any) => typeof value === 'object' || value instanceof Date;
+const isJSON = (value: string) => {
+  try {
+    const o = JSON.parse(value);
+      return true;
+    }
+  catch (e) { }
+  return false;
+};
+
+export { copyToClipboard, getDefaultValue, isNumber, isString, isDate, isJSON, getTommorrowsDate };

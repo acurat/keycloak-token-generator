@@ -4,9 +4,9 @@ import {Button, Form} from "semantic-ui-react";
 import {SupportedTypes, Tokens} from "../utils/types";
 import ModalComponent from "../components/ModalComponent";
 import AddClaim, {NewClaim} from "./AddClaim";
-import {getDefaultValue} from "../utils/globals";
-import DatePicker from "react-datepicker";
+import {getDefaultValue, getTommorrowsDate, isDate, isJSON, isNumber, isString} from "../utils/globals";
 import "react-datepicker/dist/react-datepicker.css";
+import FormDatePicker from "../components/FormDatePicker";
 
 interface Props {
     setTokens: Dispatch<Tokens | undefined>;
@@ -40,25 +40,41 @@ class GenerateCustomTokens extends React.Component<Props, State> {
     ;
 
     initialValues: FormValues = {
-        iss: 'token-generator',
-        azp: 'your-app',
-        aud: 'your-app-tests',
-        sub: 'test-id',
-        exp: new Date()
+        iss: 'token-generator (can be anything)',
+        azp: 'your-app (can be anything)',
+        aud: 'your-app-tests (can be anything)',
+        sub: 'test-id (can be anything)',
+        exp: getTommorrowsDate()
     };
 
     validate = (values: FormValues) => {
         const errors: FormValues = {};
         Object.keys(values).forEach(key => {
             const value = values[key];
-            const {claimTypes} = this.state;
+            // @ts-ignore
+            const claimType = this.state.claimTypes[key];
 
+            try {
+                if (claimType === SupportedTypes.String && !isString(value)) {
+                    errors[key] = 'Value should be a string';
+                } else if (claimType === SupportedTypes.Number && !isNumber(value)) {
+                    errors[key] = 'Value should be a number';
+                } else if (claimType === SupportedTypes.Date && !isDate(value)) {
+                    // errors[key] = 'Value should be a date';
+                } else if (claimType === SupportedTypes.Object && !isJSON(value)) {
+                    errors[key] = 'Value should be a valid JSON';
+                } else {
+                }
+            } catch (e) {
+
+            }
         });
         return errors;
     };
 
     submit = async (values: FormValues, {setSubmitting}: FormikHelpers<FormValues>) => {
 
+        console.log("submit", values);
         const {setTokens} = this.props;
         try {
             setSubmitting(true);
@@ -114,6 +130,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                     initialValues={this.initialValues}
                     validate={this.validate}
                     onSubmit={this.submit}
+                    validateOnMount={true}
                 >
                     {({
                           values,
@@ -172,13 +189,16 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                         />}
                                         {(type === SupportedTypes.Date) &&
                                         <Form.Field style={{float: 'right'}} width={13}>
-                                            <DatePicker
-                                                showTimeSelect
-                                                timeFormat="HH:mm"
-                                                dateFormat="MMM d, yyyy h:mm aa"
-                                                selected={values[key]}
-                                                onChange={newDate => setFieldValue(key, newDate)}
-                                            />
+                                            {/*<DatePicker*/}
+                                            {/*    showTimeSelect*/}
+                                            {/*    timeFormat="HH:mm"*/}
+                                            {/*    dateFormat="MMM d, yyyy h:mm aa"*/}
+                                            {/*    selected={values[key]}*/}
+                                            {/*    onChange={newDate => setFieldValue(key, newDate)}*/}
+                                            {/*/>*/}
+
+                                            <FormDatePicker claimName={key} value={values[key]}
+                                                            onChange={setFieldValue}/>
                                         </Form.Field>}
 
                                     </Form.Group>)
