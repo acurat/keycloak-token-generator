@@ -13,6 +13,8 @@ import org.bouncycastle.util.io.pem.PemWriter
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.io.StringWriter
 import java.nio.file.Files
 import java.nio.file.Path
@@ -35,7 +37,11 @@ class JwtService(resourceLoader: ResourceLoader) {
     
     init {
     
-        val data = resourceLoader.getResource("classpath:jwkset.json").file.readText()
+        val dataInputStream = resourceLoader.getResource("classpath:jwkset.json").inputStream
+        val bufferedReader = BufferedReader(InputStreamReader(dataInputStream))
+        val lines = bufferedReader.lines()
+        val data = lines.collect(Collectors.joining("\n"))
+        lines.close()
         
         rsaKey = RSAKey.parse(data)
         
