@@ -7,6 +7,8 @@ import AddClaim, {NewClaim} from "./AddClaim";
 import {getDefaultValue, getTommorrowsDate, isDate, isJSON, isNumber, isString} from "../utils/globals";
 import "react-datepicker/dist/react-datepicker.css";
 import FormDatePicker from "../components/FormDatePicker";
+import {faCoins} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface Props {
     setTokens: Dispatch<Tokens | undefined>;
@@ -74,7 +76,6 @@ class GenerateCustomTokens extends React.Component<Props, State> {
 
     submit = async (values: FormValues, {setSubmitting}: FormikHelpers<FormValues>) => {
 
-        console.log("submit", values);
         const {setTokens} = this.props;
         try {
             setSubmitting(true);
@@ -198,8 +199,9 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                 <div style={{marginTop: '30px'}}>
                                     <Button type="button" onClick={this.open}>Add More Claims</Button>
                                     <Button type="button" onClick={handleReset}>Reset Claims</Button>
-                                    <Button type="submit" disabled={isSubmitting} floated={"right"}>
-                                        Mint it!
+                                    <Button animated="vertical" type="submit" disabled={isSubmitting} floated={"right"}>
+                                        <Button.Content hidden> <FontAwesomeIcon icon={faCoins}/> </Button.Content>
+                                        <Button.Content visible> Mint it! </Button.Content>
                                     </Button>
                                 </div>
                             </Form>

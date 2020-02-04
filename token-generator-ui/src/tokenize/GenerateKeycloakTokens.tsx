@@ -4,6 +4,8 @@ import ClientsSection from './ClientsSection';
 import EnvironmentsSection from './EnvironmentsSection';
 import { Tokens } from '../utils/types';
 import ScopesSection from "./ScopesSection";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCoins} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   setTokens: Dispatch<Tokens | undefined>;
@@ -119,8 +121,9 @@ class GenerateKeycloakTokens extends React.Component<Props, State> {
               setScopes={this.setScopes}
           />
         </Form.Field>
-        <Button type="submit" active={valid} disabled={!valid}>
-          Submit
+        <Button animated="vertical" type="submit" active={valid} disabled={!valid} floated={"right"}>
+          <Button.Content hidden> <FontAwesomeIcon icon={faCoins}/> </Button.Content>
+          <Button.Content visible> Get it! </Button.Content>
         </Button>
       </Form>
     );
