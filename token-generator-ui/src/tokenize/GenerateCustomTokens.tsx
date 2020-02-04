@@ -153,7 +153,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                     // @ts-ignore
                                     const type = this.state.claimTypes[key];
                                     return (<Form.Group inline key={key}>
-                                        <label key={`label-${key}`} style={{width: '125px'}}>{key}</label>
+                                        <label key={`label-${key}`} style={{width: '125px', wordBreak: 'break-all'}}>{key}</label>
                                         {(type === SupportedTypes.String || type === SupportedTypes.Number) &&
                                         <Form.Input
                                             style={{float: 'right'}}
@@ -163,7 +163,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                             onBlur={handleBlur}
                                             value={values[key]}
                                             name={key}
-                                            width={13}
+                                            width={12}
                                             error={
                                                 errors[key] && touched[key] && {
                                                     content: errors[key],
@@ -179,7 +179,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                             onBlur={handleBlur}
                                             value={values[key]}
                                             name={key}
-                                            width={13}
+                                            width={12}
                                             error={
                                                 errors[key] && touched[key] && {
                                                     content: errors[key],
@@ -188,15 +188,7 @@ class GenerateCustomTokens extends React.Component<Props, State> {
                                             }
                                         />}
                                         {(type === SupportedTypes.Date) &&
-                                        <Form.Field style={{float: 'right'}} width={13}>
-                                            {/*<DatePicker*/}
-                                            {/*    showTimeSelect*/}
-                                            {/*    timeFormat="HH:mm"*/}
-                                            {/*    dateFormat="MMM d, yyyy h:mm aa"*/}
-                                            {/*    selected={values[key]}*/}
-                                            {/*    onChange={newDate => setFieldValue(key, newDate)}*/}
-                                            {/*/>*/}
-
+                                        <Form.Field style={{float: 'right'}} width={12}>
                                             <FormDatePicker claimName={key} value={values[key]}
                                                             onChange={setFieldValue}/>
                                         </Form.Field>}

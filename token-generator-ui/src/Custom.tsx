@@ -62,10 +62,10 @@ const Custom: React.FC<Props> = () => {
                 </Button>
             </Segment>
             <Grid fluid="true" columns={2} divided>
-                <Grid.Column width={5}>
+                <Grid.Column width={6}>
                     <GenerateCustomTokens setTokens={setTokens} setLoading={setLoading}/>
                 </Grid.Column>
-                <Grid.Column verticalAlign="middle" width={11}>
+                <Grid.Column verticalAlign="middle" width={10}>
                     <DisplayTokens tokens={tokens}/>
                 </Grid.Column>
             </Grid>

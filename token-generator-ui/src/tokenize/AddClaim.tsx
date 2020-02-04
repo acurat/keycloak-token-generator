@@ -56,7 +56,7 @@ const AddClaim: React.FC<Props> = ({onAdd}) => {
                                     onBlur={handleBlur}
                                     value={values.name}
                                     placeholder="Ex. nickname"
-                                    maxLength={15}/>
+                                    maxLength={30}/>
 
                         <label htmlFor="type">Data Type of Claim</label>
                         <Form.Field
